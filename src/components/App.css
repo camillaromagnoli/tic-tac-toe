@@ -28,7 +28,6 @@ margin-bottom: 2rem;
     grid-template-rows: repeat(3, 100px);
     gap: 0.5rem;
     
-    
 }
 
 .grade{
@@ -47,8 +46,39 @@ margin-bottom: 2rem;
 .message{
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding-top: 20px;
+    padding: 20px;
     background-color: #FF3265;
+    color: #fff;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
 
 }
+
+.board.game-over{
+    opacity: 0.8;
+}
+
+.grade.X {
+    color: #f24d66;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.grade.O {
+    color: #aabdc6
+}
+.new-game{
+
+    padding: 10px;
+    border-radius: 5px;
+    color: #34515E;
+    font-weight: bold;
+    display: block;
+    margin: 0 auto;
+    
+
+}
+
+
+

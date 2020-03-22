@@ -4,31 +4,28 @@ import './App.css'
 
 const App = () => {
 
-    // const arr = [
-    //     ['x', 'o', 'x'],
-    //     ['x', 'o', 'o'],
-    //     ['x', 'x', 'X']
-    // ];
-
     const array = Array(9).fill('')
 
     const [board, setBoard] = useState(array)
-    const [player, setPlayer] = useState('Jogador 1')
-    const [symbol, setSymbol] = useState('O')
+    const [player, setPlayer] = useState('X')
     const [winner, setWinner] = useState(null)
 
 
 
     const gradeClick = (index) => {
+
+        if (winner) {
+            return null;
+        }
         if (board[index] !== "") {
             return null;
         }
 
-        setBoard(board.map((item, itemIndex) => itemIndex === index ? symbol : item))
 
-        setSymbol(symbol === 'X' ? 'O' : 'X')
+        setBoard(board.map((item, itemIndex) => itemIndex === index ? player : item))
 
-        setPlayer(symbol === 'X' ? 'Jogador 1' : 'Jogador 2')
+
+        setPlayer(player === 'X' ? 'O' : 'X')
 
     }
 
@@ -46,9 +43,23 @@ const App = () => {
         ];
 
         winner.forEach(grades => {
-            if (grades.every(grade => grade === 'X')) setWinner(symbol);
-            if (grades.every(grade => grade === 'O')) setWinner(symbol);
+            if (grades.every(grade => grade === 'X')) setWinner('X');
+            if (grades.every(grade => grade === 'O')) setWinner('O');
         });
+
+        draw();
+    }
+
+    const draw = () => {
+        if (board.every(item => item !== ''))
+            setWinner('E')
+    }
+
+    const newGame = () => {
+        setPlayer('X')
+        setBoard(array)
+        setWinner(null)
+
     }
 
     useEffect(result, [board]);
@@ -58,21 +69,7 @@ const App = () => {
         <main><h1 className='title'>JOGO DA VELHA</h1>
 
 
-            {/* <div className='board'>
-
-                {board.map((item) => (
-                    <div>
-                        {item.map((item2, index) =>
-                            <div>{item2[index]}
-                            </div>
-                        )}
-                    </div>
-
-
-                ))}
-            </div> */}
-
-            <div className='board'>
+            <div className={`board ${winner ? 'game-over' : ""}`}>
                 {board.map((item, index) => (
                     <div key={index}
                         className={`grade ${item}`}
@@ -83,12 +80,16 @@ const App = () => {
                 )}
             </div>
 
-            <div className='message'><b>Vez do jogador {player}</b></div>
+            {winner === null ?
+                <div className='message'><b>Vez do jogador {player}</b></div>
+                : <div>{winner === 'E' ?
+                    <div className='message'>Empate</div>
+                    :
+                    <div className='message'>Vitória do {winner}</div>
+                }</div>}
+            <button className='new-game' onClick={newGame}>JOGAR NOVAMENTE</button>
+
         </main>
-
-
-
-
     )
 
 }
